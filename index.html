@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flash Lanches – Delivery</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">Flash <span>Lanches</span></div>
+  <button class="cart-btn" id="openCart" aria-label="Abrir carrinho">🛒 Carrinho <b id="count">0</b></button>
+</header>
+
+<section class="hero">
+  <div class="hero-in">
+    <h1>Da chapa direto à sua porta.</h1>
+    <p>Burgers artesanais, batata crocante e bebida gelada. Entrega em 35 a 45 minutos.</p>
+  </div>
+  <div class="big" aria-hidden="true">🍔</div>
+</section>
+<div class="info">
+  <span class="pill">🛵 Entrega R$ 6,00</span>
+  <span class="pill">🎉 Grátis acima de R$ 70</span>
+  <span class="pill">💳 Pague antes: PIX ou cartão de crédito</span>
+</div>
+
+<nav class="chips" id="chips" aria-label="Categorias"></nav>
+<main id="menu"></main>
+<footer>Flash Lanches · Pedidos todos os dias, das 18h às 23h30</footer>
+
+<div class="bar" id="bar"><button class="btn" id="barBtn"><span id="barQty"></span><span>Ver carrinho</span><span id="barTotal"></span></button></div>
+
+<!-- Carrinho -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Carrinho de compras" aria-hidden="true">
+  <div class="dh"><h2>Seu pedido</h2><button class="x" id="closeCart" aria-label="Fechar">✕</button></div>
+  <div class="items" id="items"></div>
+  <div class="sum" id="sum"></div>
+  <div style="padding:0 1rem 1rem"><button class="btn wide" id="goCheckout">Ir para pagamento</button></div>
+</aside>
+
+<!-- Checkout -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Finalizar pedido">
+  <div class="mwrap">
+    <div id="stepForm">
+      <div class="mtop"><h2 style="margin:.5rem 0">Finalizar pedido</h2><button class="x" id="closeModal" aria-label="Voltar">✕</button></div>
+      <p class="warn">Pagamento adiantado obrigatório. Não aceitamos pagamento na entrega: o pedido só vai para a cozinha depois da confirmação.</p>
+      <form id="form" novalidate>
+        <fieldset>
+          <legend>Seus dados</legend>
+          <div class="f">
+            <label class="full">Nome<input name="nome" autocomplete="name" required></label>
+            <label class="full">WhatsApp / Telefone<input name="tel" id="tel" inputmode="tel" autocomplete="tel" placeholder="(92) 99999-9999" required></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Endereço de entrega</legend>
+          <div class="f">
+            <label class="full">Rua<input name="rua" autocomplete="address-line1" required></label>
+            <label>Número<input name="num" inputmode="numeric" required></label>
+            <label>Bairro<input name="bairro" required></label>
+            <label class="full">Ponto de referência<input name="ref" placeholder="Ex.: casa azul, ao lado da padaria"></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Pagamento</legend>
+          <div class="pay-tabs" role="radiogroup">
+            <label><input type="radio" name="pay" value="pix" checked><span>PIX</span></label>
+            <label><input type="radio" name="pay" value="credito"><span>Cartão de crédito</span></label>
+          </div>
+          <div class="panel on" id="p-pix">
+            <div class="qr" id="qr" role="img" aria-label="QR Code PIX"></div>
+            <div class="code" id="pixCode"></div>
+            <button type="button" class="btn ghost wide" id="copyPix">Copiar código PIX</button>
+            <p class="note">Pague no app do seu banco (o valor já vai preenchido) e depois toque no botão abaixo para enviar o pedido. Só começamos o preparo depois de conferir o PIX.</p>
+          </div>
+          <div class="panel" id="p-card"><p class="note" style="margin:0">Cartão de crédito em até 12x pelo link de pagamento seguro do PicPay. Ao enviar o pedido, respondemos no WhatsApp com o link já no valor total. Você paga no link e só então começamos o preparo.</p></div>
+        </fieldset>
+        <div class="sum" id="sum2" style="border:0;padding:0 0 .5rem"></div>
+        <div class="err" id="err" role="alert"></div>
+        <button class="btn wide" id="payBtn" type="submit">Pagar</button>
+      </form>
+    </div>
+
+    <div id="stepOk" style="display:none">
+      <div class="ok-wrap">
+        <div class="ok-ic">✓</div>
+        <h2 style="margin:0">Pedido registrado!</h2>
+        <p style="color:var(--muted)" id="okMsg"></p>
+        <div class="ord" id="ordNum"></div>
+        <p>Previsão após confirmar o pagamento: <b id="eta"></b></p>
+        <div class="recap" id="recap"></div>
+        <button class="btn wa wide" id="waBtn">Enviar resumo no WhatsApp</button>
+        <button class="btn ghost wide" id="newOrder" style="margin-top:.6rem">Fazer novo pedido</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
